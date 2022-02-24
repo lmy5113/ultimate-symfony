@@ -1,0 +1,10 @@
+# test:
+#     path: /test/{age}
+#     controller: App\Controller\TestController::index
+#     defaults:
+#       age: 0
+#     requirements:
+#       age: \d+  
+#     methods: [GET]  
+#     host: localhost
+#     schemes: [https, http]
