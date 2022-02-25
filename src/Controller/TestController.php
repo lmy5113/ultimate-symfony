@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TestController {
     /**
-     * @Route("/test/{age}", name="test", methods={"GET", "POST"}, host="localhost", schemes={"http", "https"})
+     * @Route("/test/{age?0}", name="test", methods={"GET", "POST"}, host="localhost", schemes={"http", "https"})
      */
     public function index(Request $request) {
         //http foundation
@@ -17,4 +17,5 @@ class TestController {
         return new Response($age);
     }
 
+    
 }
