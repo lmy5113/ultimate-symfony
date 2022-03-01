@@ -34,3 +34,7 @@ services:
 
     #here we can configure custom dependency injection
     Cocur\Slugify\Slugify: ~        
+    
+    App\Taxes\Detector: 
+        arguments:
+            $limit: 100

@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use Twig\Environment;
+use App\Taxes\Detector;
 use App\Taxes\Calculator;
 use Cocur\Slugify\Slugify;
 use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HelloController {
+class HelloController extends AbstractController {
 
     protected $calculator;
 
@@ -23,11 +26,11 @@ class HelloController {
     }
 
     /**
-     * @Route("/hello/{name?world}", name="hello", methods={"GET", "POST"}, host="localhost", schemes={"http", "https"})
+     * @Route("/hello/{name}", name="hello", methods={"GET", "POST"}, host="localhost", schemes={"http", "https"})
      */
-    public function hello(?string $name, LoggerInterface $logger, Calculator $c) {
-        $this->logger->info('test logger');
-        
-        return new Response("Hello {$c->calculate(100)}");
+    public function hello(?string $name = 'hh') {
+        $html = $this->render('hello.html.twig', ['name' => $name, 'age' => 20]);
+
+        return new Response($html);
     }
 }
