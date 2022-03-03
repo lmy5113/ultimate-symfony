@@ -20,7 +20,7 @@ class CategoryController extends AbstractController
     public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $em) {
         $form = $this->createForm(CategoryType::class); 
         $form->handleRequest($request); 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
             $category->setSlug($slugger->slug($category->getName()));
  
@@ -41,7 +41,7 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
             return $this->redirectToRoute('product_category', ['slug' => $category->getSlug()]);    

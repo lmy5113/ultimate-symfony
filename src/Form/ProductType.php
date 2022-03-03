@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductType extends AbstractType
 {
@@ -24,7 +25,9 @@ class ProductType extends AbstractType
     {
         $builder->add('name', TextType::class, [
             'label' => 'Nom du produit',
-            'attr' => ['placeholder' => 'Tapez le nom du produit']
+            'attr' => ['placeholder' => 'Tapez le nom du produit'],
+            'required' => false,
+            // 'constraints' => new NotBlank(['message' => "Validation du formulaire : le nom du produit ne peut pas être vide"])
         ])
             ->add('shortDescription', TextareaType::class, [
                 'label' => 'Description courte',
