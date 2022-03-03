@@ -5,9 +5,6 @@
     "cocur/slugify": {
         "version": "v4.1.0"
     },
-    "composer/package-versions-deprecated": {
-        "version": "1.11.99.5"
-    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -243,16 +240,10 @@
             "./src/Kernel.php"
         ]
     },
-    "symfony/http-client-contracts": {
-        "version": "v2.5.0"
-    },
     "symfony/http-foundation": {
         "version": "v5.1.11"
     },
     "symfony/http-kernel": {
-        "version": "v5.1.11"
-    },
-    "symfony/intl": {
         "version": "v5.1.11"
     },
     "symfony/maker-bundle": {
@@ -301,6 +292,9 @@
         "version": "v1.24.0"
     },
     "symfony/polyfill-php80": {
+        "version": "v1.24.0"
+    },
+    "symfony/polyfill-php81": {
         "version": "v1.24.0"
     },
     "symfony/property-access": {

@@ -73,15 +73,15 @@ class ProductController extends AbstractController
         return $this->render('product/edit.html.twig', ['product' => $product, 'formView' => $form->createView()]);
     }
 
-    /*
+    /**
      * @Route("/admin/product/create", name="product_create")
      */
     public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager)
     {
-        $form =  $this->createForm(ProductType::class);
+        $product = new Product();
+        $form =  $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-            $product = $form->getData();
             $product->setSlug(strtolower($slugger->slug($product->getName())));
             
             $entityManager->persist($product);
