@@ -7,9 +7,13 @@ use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CategoryController extends AbstractController
 {
@@ -47,9 +51,39 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/admin/category/{id}/edit", name="category_edit")
+     * 
      */
     public function edit(int $id, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $em) {
+       
+        // $user = $this->getUser();
+        //  if (!$user) {
+        //      return $this->redirectToRoute('security_login');
+        // }
+        // if (!$this->isGranted("ROLE_ADMIN")) {
+        //     throw new AccessDeniedException("Vous n'avez pas le droit d'accès.");
+        // }
+        
+        // $this->denyAccessUnlessGranted("ROLE_ADMIN", null, "Vous n'avez pas le droit d'accéder à cette ressource.");
+
         $category = $categoryRepository->find($id);
+
+        if (!$category) {
+            throw new NotFoundHttpException("Cette catégorie n'existe pas.");
+        }
+
+        // $user = $this->getUser();
+
+        // if (!$user) {
+        //     return $this->redirectToRoute("security_login");
+        // }
+
+        // if ($user !== $category->getOwner()) {
+        //     throw new AccessDeniedException("Vous n'êtes pas le propriétaire de cette catégorie.");
+        // }
+
+        // $security->isGranted('CAN_EDIT', $category);    
+
+        // $this->denyAccessUnlessGranted('CAN_EDIT', $category);    
 
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
