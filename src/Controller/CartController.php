@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ProductRepository;
 use App\Cart\CartService;
+use App\Form\CartConfirmationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,10 +50,11 @@ class CartController extends AbstractController
      * @Route("/cart", name="cart_show")
      */
     public function show() {
-
+        $form = $this->createForm(CartConfirmationType::class);
         return $this->render('cart/index.html.twig', [
             'items' => $this->cartService->getDetailedCartItems(),
-            'total' => $this->cartService->getTotal()
+            'total' => $this->cartService->getTotal(),
+            'confirmationForm' => $form->createView()
         ]);
     }
 

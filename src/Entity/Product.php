@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\CLassMetaData;
@@ -56,7 +58,18 @@ class Product
      */
     private $shortDescription;
 
-    public static function loadValidatorMetadata(CLassMetaData $metadata) {
+    /**
+     * @ORM\OneToMany(targetEntity=PurchaseItem::class, mappedBy="product")
+     */
+    private $purchaseItems;
+
+    public function __construct()
+    {
+        $this->purchaseItems = new ArrayCollection();
+    }
+
+    public static function loadValidatorMetadata(CLassMetaData $metadata)
+    {
         // $metadata->addPropertyConstraints('name', [
         //     new Assert\NotBlank(['message' => 'Le nom du produit est obligatoire']),
         //     new Assert\Length(['min' => 3, 'max' => 255, 'minMessage' => 'Le nom du produit doit être au moins 3 caractères'])
@@ -137,6 +150,36 @@ class Product
     public function setShortDescription(?string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PurchaseItem>
+     */
+    public function getPurchaseItems(): Collection
+    {
+        return $this->purchaseItems;
+    }
+
+    public function addPurchaseItem(PurchaseItem $purchaseItem): self
+    {
+        if (!$this->purchaseItems->contains($purchaseItem)) {
+            $this->purchaseItems[] = $purchaseItem;
+            $purchaseItem->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchaseItem(PurchaseItem $purchaseItem): self
+    {
+        if ($this->purchaseItems->removeElement($purchaseItem)) {
+            // set the owning side to null (unless already changed)
+            if ($purchaseItem->getProduct() === $this) {
+                $purchaseItem->setProduct(null);
+            }
+        }
 
         return $this;
     }
