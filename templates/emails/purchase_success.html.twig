@@ -13,14 +13,14 @@
                 <td>{{ item.productName }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.productPrice }}</td>
-                <td>{{ item.total / 100 }} &euro;</td>
+                <td>{{ item.total | amount }}</td>
             </tr>
         {% endfor %}
     </tbody>
     <tfoot>
         <tr>
             <td colspan="3">Total :</td>
-            <td> {{ purchase.total }} &euro;</td>
+            <td> {{ purchase.total | amount }}</td>
         </tr>
     </tfoot>
 </table>
