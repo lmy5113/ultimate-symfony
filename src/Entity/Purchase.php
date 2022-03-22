@@ -7,10 +7,11 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 /**
  * @ORM\Entity(repositoryClass=PurchaseRepository::class)
- * @ORM\HasLifeCycleCallback
+ * @ORM\HasLifecycleCallbacks()
  */
 class Purchase
 {
@@ -77,7 +78,8 @@ class Purchase
     /**
      * @ORM\PrePersist
      */
-    public function prePersist() {
+    public function prePersist()
+    {
         if (empty($this->purchasedAt)) {
             $this->purchasedAt = new DateTime();
         }
@@ -85,7 +87,8 @@ class Purchase
     /**
      * @ORM\PreFlush
      */
-    public function preFlush() {
+    public function preFlush()
+    {
         $total = 0;
         foreach ($this->purchaseItems as $item) {
             $total += $item->getTotal();
